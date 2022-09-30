@@ -1,0 +1,47 @@
+# General
+env: dev
+facade_base_url: https://services.dev.hallmark.com
+core_base_url: https://core-services.dev.dotcom.hmklabs.com:8080
+validate_ssl_cert: false
+
+# Test Report and Emailing
+report:
+  email:
+    enabled: false
+    from: platformbot@hallmarklabs.com
+    from_password: <fill in>
+    # Specify a list of addresses
+    send_to:
+  s3_upload:
+    enabled: false
+    bucket: hmklabs-dotcom-dev-qa-automation-artifacts
+
+# AWS
+aws:
+  default_region: us-west-2
+  secrets:
+    enabled: false
+    keys:
+      - /hmklabs/dotcom/dev/qa-automation
+      - /hmklabs/dotcom/dev/authentication
+
+# Authentication and Tokens
+auth:
+  keys:
+    default: dev-key-1
+    private: <fill in>
+  token:
+    # This value is used as the "iss" in the generated tokens
+    # TODO this should be updated at some point to a new ID for the test framework
+    issuer_app_id: 9cf2aae6-86c3-4fa6-88ef-226a05ad6455
+    endpoints:
+      clients: /identity/clients-token
+      account: /identity/account-token
+    # The token client is used to get a token through Identity service when using the client_token() fixture
+    client:
+      id: <fill in>
+      secret: <fill in>
+    # The token accounts issuer is used by the fixtures account_token_guest() and account_token_registered()
+    accounts_issuer:
+      id: <fill in>
+      secret: <fill in>

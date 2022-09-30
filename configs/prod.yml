@@ -1,0 +1,13 @@
+# General
+env: prod
+validate_ssl_cert: true
+
+# AWS
+aws:
+  default_region: us-west-2
+
+# Test Report
+report:
+  s3_upload:
+    enabled: true
+    bucket: hmklabs-dotcom-prod-qa-automation-artifacts
