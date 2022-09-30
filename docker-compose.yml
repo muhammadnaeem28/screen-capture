@@ -1,0 +1,15 @@
+version: '3'
+services:
+  pytester:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/app
+    environment:
+      # Note the -n X starts X workers to decrease total execution time
+      - PYTEST_ADDOPTS=--tc-file=configs/local.yml -n 5
+    extra_hosts:
+      # For this to work, the core base url in the configs should be something like:
+      # core_base_url: https://core-services.dev.dotcom.hmklabs.com:8080
+      - "core-services.dev.dotcom.hmklabs.com:192.168.65.2"

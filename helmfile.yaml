@@ -1,0 +1,32 @@
+---
+bases:
+  - {{ env "CONFIG_DIR" }}/environment/helmfile.yaml
+
+---
+releases:
+
+  - name: screen-capture-cronjob
+    labels:
+      # oneshot
+      kind: Cronjob
+    chart: {{ env "HELM_CHARTS_DIR" }}/cronjob
+    namespace: {{ .Namespace | default "default" }}
+    missingFileHandler: Error
+    values:
+      - {{ env "CONFIG_DIR" }}/environment/values.yaml.gotmpl
+      - {{ env "CONFIG_DIR" }}/jobs/screen-capture/values.yaml
+      - jobsuffix: {{ env "KUBE_JOB_SUFFIX" }}
+
+
+  #TEMPORAL FOR TESTING JOB - DELETE AFTER
+  - name: screen-capture-job
+    labels:
+      # oneshot
+      kind: Job
+    chart: {{ env "HELM_CHARTS_DIR" }}/job
+    namespace: {{ .Namespace | default "default" }}
+    missingFileHandler: Error
+    values:
+      - {{ env "CONFIG_DIR" }}/environment/values.yaml.gotmpl
+      - {{ env "CONFIG_DIR" }}/jobs/screen-capture/values_temporal_job.yaml
+      - jobsuffix: {{ env "KUBE_JOB_SUFFIX" }}
